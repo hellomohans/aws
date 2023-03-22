@@ -8,7 +8,7 @@ app.get("/new", (req,res)=>{
     res.send("New route is working");
 });
 
-app.listen(process.env.PORT || 5000,()=>{
+app.listen(5000,()=>{
     console.log("app is working");
 });
 
