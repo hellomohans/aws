@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery with Fancybox</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+  <style>
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .gallery a {
+      width: 30%;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .gallery a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center">Gallery with Fancybox (Lightbox, Counter, Swipe)</h2>
+
+  <div class="gallery">
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature1">
+      <img src="https://source.unsplash.com/random/300x200?nature1" alt="Image 1">
+    </a>
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature2">
+      <img src="https://source.unsplash.com/random/300x200?nature2" alt="Image 2">
+    </a>
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature3">
+      <img src="https://source.unsplash.com/random/300x200?nature3" alt="Image 3">
+    </a>
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature4">
+      <img src="https://source.unsplash.com/random/300x200?nature4" alt="Image 4">
+    </a>
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature5">
+      <img src="https://source.unsplash.com/random/300x200?nature5" alt="Image 5">
+    </a>
+    <a data-fancybox="gallery" href="https://source.unsplash.com/random/800x600?nature6">
+      <img src="https://source.unsplash.com/random/300x200?nature6" alt="Image 6">
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+</body>
+</html>
