@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Filterable Gallery with Fancybox</title>
+
+  <!-- Fancybox CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    /* Category buttons */
+    .filters {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .filters button {
+      background: #eee;
+      border: none;
+      margin: 0 5px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .filters button.active,
+    .filters button:hover {
+      background: #007BFF;
+      color: #fff;
+    }
+
+    /* Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .gallery-item {
+      display: none;
+    }
+    .gallery-item.show {
+      display: block;
+    }
+    .gallery-item img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .gallery-item img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Our Portfolio</h2>
+  <div class="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="posters">Posters</button>
+    <button data-filter="logo">Logo</button>
+    <button data-filter="website">Website</button>
+    <button data-filter="package">Package Design</button>
+  </div>
+
+  <div class="gallery" id="gallery">
+    <!-- Posters -->
+    <div class="gallery-item" data-category="posters">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg">
+        <img src="https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Poster 1">
+      </a>
+    </div>
+    <div class="gallery-item" data-category="posters">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/34950/pexels-photo.jpg">
+        <img src="https://images.pexels.com/photos/34950/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300" alt="Poster 2">
+      </a>
+    </div>
+
+    <!-- Logos -->
+    <div class="gallery-item" data-category="logo">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/144389/pexels-photo-144389.jpeg">
+        <img src="https://images.pexels.com/photos/144389/pexels-photo-144389.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Logo 1">
+      </a>
+    </div>
+    <div class="gallery-item" data-category="logo">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/91224/pexels-photo-91224.jpeg">
+        <img src="https://images.pexels.com/photos/91224/pexels-photo-91224.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Logo 2">
+      </a>
+    </div>
+
+    <!-- Websites -->
+    <div class="gallery-item" data-category="website">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/1236701/pexels-photo-1236701.jpeg">
+        <img src="https://images.pexels.com/photos/1236701/pexels-photo-1236701.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Website 1">
+      </a>
+    </div>
+    <div class="gallery-item" data-category="website">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/965378/pexels-photo-965378.jpeg">
+        <img src="https://images.pexels.com/photos/965378/pexels-photo-965378.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Website 2">
+      </a>
+    </div>
+
+    <!-- Package Designs -->
+    <div class="gallery-item" data-category="package">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/6386482/pexels-photo-6386482.jpeg">
+        <img src="https://images.pexels.com/photos/6386482/pexels-photo-6386482.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Package 1">
+      </a>
+    </div>
+    <div class="gallery-item" data-category="package">
+      <a data-fancybox="gallery" href="https://images.pexels.com/photos/6472042/pexels-photo-6472042.jpeg">
+        <img src="https://images.pexels.com/photos/6472042/pexels-photo-6472042.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Package 2">
+      </a>
+    </div>
+  </div>
+
+  <!-- Fancybox JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+  <script>
+    // initialize filter
+    const filterButtons = document.querySelectorAll('.filters button');
+    const items = document.querySelectorAll('.gallery-item');
+
+    function showItems(category) {
+      items.forEach(item => {
+        item.classList.toggle('show', category === 'all' || item.dataset.category === category);
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // set active class
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // filter items
+        showItems(btn.dataset.filter);
+      });
+    });
+
+    // show all on load
+    showItems('all');
+  </script>
+</body>
+</html>
