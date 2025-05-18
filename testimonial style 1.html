@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Testimonial Slider</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .testimonial-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .testimonial {
+      display: none;
+    }
+
+    .testimonial.active {
+      display: block;
+      animation: fade 0.5s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .quote {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .author {
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .controls button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin: 0 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>What Our Clients Say</h1>
+
+  <div class="testimonial-container">
+    <div class="testimonial active">
+      <p class="quote">“They created a beautiful website for our shop. Fast delivery and friendly support!”</p>
+      <p class="author">– Priya S., Boutique Owner</p>
+    </div>
+    <div class="testimonial">
+      <p class="quote">“Great service and result! Our business improved after their digital marketing strategy.”</p>
+      <p class="author">– Karthik R., Startup Founder</p>
+    </div>
+    <div class="testimonial">
+      <p class="quote">“Highly professional and always ready to support. Hosting and SEO handled well.”</p>
+      <p class="author">– Saravanan M., Photographer</p>
+    </div>
+
+    <div class="controls">
+      <button onclick="prevTestimonial()">Prev</button>
+      <button onclick="nextTestimonial()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const testimonials = document.querySelectorAll('.testimonial');
+    let index = 0;
+
+    function showTestimonial(i) {
+      testimonials.forEach((t, idx) => {
+        t.classList.remove('active');
+        if (idx === i) t.classList.add('active');
+      });
+    }
+
+    function nextTestimonial() {
+      index = (index + 1) % testimonials.length;
+      showTestimonial(index);
+    }
+
+    function prevTestimonial() {
+      index = (index - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(index);
+    }
+
+    // Auto Slide Every 5s
+    setInterval(nextTestimonial, 5000);
+  </script>
+
+</body>
+</html>
