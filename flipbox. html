@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flipbox Services</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .flipbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .flip-box {
+      background-color: transparent;
+      perspective: 1000px;
+    }
+
+    .flip-box-inner {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-box:hover .flip-box-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-box-front,
+    .flip-box-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flip-box-front {
+      background: #007BFF;
+    }
+
+    .flip-box-back {
+      background: #ff5722;
+      transform: rotateY(180deg);
+    }
+
+    .flip-box h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .flip-box p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Our Services</h1>
+
+  <div class="flipbox-grid">
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>Web Design</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Responsive Design</h2>
+          <p>We create modern, mobile-friendly websites.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>SEO</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Google Ranking</h2>
+          <p>Boost your visibility in search engines.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>E-Commerce</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Online Stores</h2>
+          <p>Sell your products online with ease.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>Digital Marketing</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Social Media Ads</h2>
+          <p>Promote your business on Facebook, Insta, Google.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>Logo Design</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Creative Branding</h2>
+          <p>Unique, professional logo for your brand.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+        <div class="flip-box-front">
+          <h2>Hosting Setup</h2>
+          <p>Click to learn more</p>
+        </div>
+        <div class="flip-box-back">
+          <h2>Domain + Hosting</h2>
+          <p>Get your website live with secure hosting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
