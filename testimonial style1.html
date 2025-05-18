@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infinite Testimonial Carousel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 40px 10px;
+    }
+
+    .carousel-container {
+      max-width: 1200px;
+      margin: auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+    }
+
+    .testimonial {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 10px;
+      flex: 0 0 100%;
+      text-align: center;
+    }
+
+    .testimonial img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #555;
+    }
+
+    .author {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #007BFF;
+    }
+
+    .role {
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Desktop: 3 slides per view */
+    @media (min-width: 768px) {
+      .testimonial {
+        flex: 0 0 33.3333%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="carousel-container">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=31" />
+        <p class="quote">“Great service! Timely support and creative ideas.”</p>
+        <p class="author">Kaviya</p>
+        <p class="role">Digital Marketer</p>
+      </div>
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=32" />
+        <p class="quote">“Professional and punctual. Highly recommend.”</p>
+        <p class="author">Vignesh</p>
+        <p class="role">Startup Owner</p>
+      </div>
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=33" />
+        <p class="quote">“They redesigned our site perfectly.”</p>
+        <p class="author">Rani</p>
+        <p class="role">Blogger</p>
+      </div>
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=34" />
+        <p class="quote">“Affordable and fast. Very satisfied!”</p>
+        <p class="author">Arun</p>
+        <p class="role">Freelancer</p>
+      </div>
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=35" />
+        <p class="quote">“I love the layout and mobile design.”</p>
+        <p class="author">Deepa</p>
+        <p class="role">Business Coach</p>
+      </div>
+      <div class="testimonial">
+        <img src="https://i.pravatar.cc/150?img=36" />
+        <p class="quote">“Our site looks amazing, thanks!”</p>
+        <p class="author">Naveen</p>
+        <p class="role">Photographer</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const track = document.getElementById('carouselTrack');
+    let testimonials = Array.from(track.children);
+    let slideWidth = testimonials[0].offsetWidth;
+    
+    // Detect slides per view based on window width
+    function getSlidesPerView() {
+      return window.innerWidth >= 768 ? 3 : 1;
+    }
+
+    // Clone first slides and append for infinite effect
+    function setupClones() {
+      const slidesPerView = getSlidesPerView();
+
+      // Remove existing clones if any
+      const clones = track.querySelectorAll('.clone');
+      clones.forEach(clone => clone.remove());
+
+      // Clone first slidesPerView slides and append
+      for (let i = 0; i < slidesPerView; i++) {
+        const clone = testimonials[i].cloneNode(true);
+        clone.classList.add('clone');
+        track.appendChild(clone);
+      }
+    }
+
+    let slideIndex = 0;
+    let slidesPerView = getSlidesPerView();
+
+    function moveSlide() {
+      slideWidth = testimonials[0].offsetWidth;
+      slidesPerView = getSlidesPerView();
+      slideIndex++;
+      track.style.transition = 'transform 0.5s ease-in-out';
+      track.style.transform = `translateX(${-slideWidth * slideIndex}px)`;
+
+      // When we reach the clones, reset instantly
+      if (slideIndex === testimonials.length) {
+        setTimeout(() => {
+          track.style.transition = 'none';
+          slideIndex = 0;
+          track.style.transform = `translateX(0px)`;
+        }, 510); // just after transition ends
+      }
+    }
+
+    function startCarousel() {
+      setupClones();
+      testimonials = Array.from(track.children); // update with clones
+      slideIndex = 0;
+      track.style.transform = 'translateX(0)';
+      clearInterval(window.carouselInterval);
+      window.carouselInterval = setInterval(moveSlide, 2000);
+    }
+
+    window.addEventListener('resize', () => {
+      startCarousel();
+    });
+
+    // Initialize
+    startCarousel();
+  </script>
+
+</body>
+</html>
