@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lime Line Background</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0e0e0e;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    .animated-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(0, 255, 0, 0.07) 0,
+        rgba(0, 255, 0, 0.07) 2px,
+        transparent 2px,
+        transparent 40px
+      );
+      animation: moveBg 12s linear infinite;
+    }
+
+    @keyframes moveBg {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="content">
+    <h1 style="color: #adff2f;">Welcome to My Creative Section</h1>
+    <p>With Lime Animated Lines on Dark Background</p>
+  </div>
+</body>
+</html>
