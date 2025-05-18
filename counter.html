@@ -1,0 +1,68 @@
+<section class="counter-section">
+  <div class="counter-box">
+    <span class="counter" data-target="5">0</span>
+    <p>Years of Experience</p>
+  </div>
+  <div class="counter-box">
+    <span class="counter" data-target="20">0</span>
+    <p>Projects Completed</p>
+  </div>
+  <div class="counter-box">
+    <span class="counter" data-target="15">0</span>
+    <p>Happy Clients</p>
+  </div>
+</section>
+
+
+.counter-section {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: #f9f9f9;
+  padding: 40px;
+  text-align: center;
+}
+
+.counter-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.counter {
+  font-size: 40px;
+  color: #2d89ef;
+  font-weight: bold;
+}
+
+.counter-box p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+
+  // Delay 2 seconds before starting the animation
+  setTimeout(() => {
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText;
+        const increment = target / 100;
+
+        if (current < target) {
+          counter.innerText = Math.ceil(current + increment);
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+
+      updateCount();
+    });
+  }, 2000); // 2000 milliseconds = 2 seconds
+</script>
