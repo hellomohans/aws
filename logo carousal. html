@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Logo Carousel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px 0;
+    }
+
+    .logo-carousel {
+      overflow: hidden;
+      background: #fff;
+      padding: 20px 0;
+      border-top: 4px solid #2d89ef;
+      border-bottom: 4px solid #2d89ef;
+    }
+
+    .logo-track {
+      display: flex;
+      width: max-content;
+      animation: scrollLeft 25s linear infinite;
+    }
+
+    .logo {
+      flex: 0 0 auto;
+      width: 150px;
+      margin: 0 30px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      transition: filter 0.4s ease;
+    }
+
+    .logo img:hover {
+      filter: grayscale(0%);
+    }
+
+    @keyframes scrollLeft {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        width: 100px;
+        margin: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="logo-carousel">
+    <div class="logo-track">
+      <!-- Duplicate logos twice for smooth loop -->
+      <div class="logo"><img src="logo1.png" alt="Client 1"></div>
+      <div class="logo"><img src="logo2.png" alt="Client 2"></div>
+      <div class="logo"><img src="logo3.png" alt="Client 3"></div>
+      <div class="logo"><img src="logo4.png" alt="Client 4"></div>
+      <div class="logo"><img src="logo5.png" alt="Client 5"></div>
+
+      <!-- Duplicate again to loop smoothly -->
+      <div class="logo"><img src="logo1.png" alt="Client 1"></div>
+      <div class="logo"><img src="logo2.png" alt="Client 2"></div>
+      <div class="logo"><img src="logo3.png" alt="Client 3"></div>
+      <div class="logo"><img src="logo4.png" alt="Client 4"></div>
+      <div class="logo"><img src="logo5.png" alt="Client 5"></div>
+    </div>
+  </section>
+
+</body>
+</html>
