@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop & Rotate Image Upload</title>
+  <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
+  <style>
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+             background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    .modal-content { background: #fff; padding: 20px; border-radius: 10px; text-align: center; width: 90%; max-width: 400px; }
+    .preview-container { position: relative; display: inline-block; margin-bottom: 15px; }
+    .preview-container img { max-width: 150px; max-height: 150px; border-radius: 50%; }
+    .remove-btn { position: absolute; top: -5px; right: -5px; background: red; color: white;
+                  border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; }
+  </style>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+
+<h2>User Form with Image Crop & Rotate</h2>
+
+<form id="userForm">
+  <input type="text" name="name" placeholder="Name" required><br><br>
+  <input type="number" name="age" placeholder="Age" required><br><br>
+  <input type="date" name="dob" placeholder="DOB" required><br><br>
+
+  <input type="file" id="imageInput" accept="image/*"><br><br>
+
+  <div class="preview-container" id="imagePreviewContainer" style="display:none;">
+    <img id="croppedPreview" />
+    <button type="button" class="remove-btn" id="removeImageBtn">X</button>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<!-- Modal for cropper -->
+<div class="modal" id="cropModal">
+  <div class="modal-content">
+    <h3>Edit Image</h3>
+    <img id="cropImage" style="max-width:100%;"><br><br>
+
+    <label>Rotate: <span id="angleValue">0°</span></label><br>
+    <input type="range" id="rotateSlider" min="-180" max="180" step="1" value="0"><br><br>
+
+    <button type="button" id="completeCrop">Complete</button>
+    <button type="button" id="closeModal">Cancel</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+<script>
+  const imageInput = document.getElementById('imageInput');
+  const cropModal = document.getElementById('cropModal');
+  const cropImage = document.getElementById('cropImage');
+  const croppedPreview = document.getElementById('croppedPreview');
+  const previewContainer = document.getElementById('imagePreviewContainer');
+  const removeImageBtn = document.getElementById('removeImageBtn');
+  const closeModal = document.getElementById('closeModal');
+  const completeCrop = document.getElementById('completeCrop');
+  const rotateSlider = document.getElementById('rotateSlider');
+  const angleValue = document.getElementById('angleValue');
+  const userForm = document.getElementById('userForm');
+
+  let cropper;
+  let croppedBlob;
+
+  imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      cropImage.src = reader.result;
+      cropModal.style.display = 'flex';
+
+      setTimeout(() => {
+        cropper = new Cropper(cropImage, {
+          aspectRatio: 1,
+          viewMode: 1,
+          rotatable: true,
+        });
+        rotateSlider.value = 0;
+        angleValue.textContent = "0°";
+      }, 100);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  rotateSlider.addEventListener('input', () => {
+    const angle = parseInt(rotateSlider.value);
+    cropper.rotateTo(angle);
+    angleValue.textContent = `${angle}°`;
+  });
+
+  closeModal.onclick = () => {
+    cropModal.style.display = 'none';
+    cropper.destroy();
+    cropper = null;
+    imageInput.value = '';
+  };
+
+  removeImageBtn.onclick = () => {
+    previewContainer.style.display = 'none';
+    croppedPreview.src = '';
+    croppedBlob = null;
+    imageInput.value = '';
+  };
+
+  completeCrop.onclick = () => {
+    cropper.getCroppedCanvas().toBlob((blob) => {
+      croppedBlob = blob;
+      const previewURL = URL.createObjectURL(blob);
+      croppedPreview.src = previewURL;
+      previewContainer.style.display = 'inline-block';
+
+      cropModal.style.display = 'none';
+      cropper.destroy();
+      cropper = null;
+    }, 'image/png');
+  };
+
+  userForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(userForm);
+    if (croppedBlob) {
+      formData.append('image', croppedBlob, 'cropped.png');
+    }
+
+    fetch('/user-register', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert('Form submitted!');
+      userForm.reset();
+      removeImageBtn.click();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error submitting form.');
+    });
+  });
+</script>
+
+</body>
+</html>
